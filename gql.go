@@ -42,7 +42,11 @@ func postGraphQL(url, queryStr string) (gqlDataStruct, error) {
 	// Do the request
 	client := &http.Client{}
 	resp, err := client.Do(req)
-
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+	
 	// DEBUG.Println(GQL, "Post graphql body", resp)
 	respBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

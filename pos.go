@@ -26,7 +26,14 @@ func listenPositionRequest() (*net.UDPConn, error) {
 }
 
 func servePositionReq() error {
-	positionConn, _ = listenPositionRequest()
+	var (
+		err error
+	)
+	positionConn, err = listenPositionRequest()
+	if err != nil {
+		log.Fatal("Failed to listen socket:", err)
+	}
+
 	for appStop == false {
 		buffer := make([]byte, maxDatagramSize)
 		numBytes, src, err := positionConn.ReadFromUDP(buffer)
